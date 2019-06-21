@@ -1,0 +1,63 @@
+<?php 
+    if ($_POST['image_upload'] == 'Upload Image' ) {
+       
+        echo "<pre>";
+        print_r( $_FILES );
+
+        $image_name   = $_FILES ['photo'] ['name'];
+        $image_type   = $_FILES ['photo'] ['type'];
+        $image_path   = $_FILES ['photo'] ['tmp_name'];
+        $image_error  = $_FILES ['photo'] ['error'];
+        $image_size   = $_FILES ['photo'] ['size'];
+        
+
+        echo "Image Name = " . $image_name ."<br>";
+        echo "Image Type = " . $image_type ."<br>";
+        echo "Image Path = " . $image_path ."<br>";
+        echo "Image Error = ". $image_error ."<br>";
+        echo "Image Size = " . $image_size ."<br>";
+
+        $dir = "uploads/";
+
+        move_uploaded_file( $image_path, $dir . $image_name );
+
+        $sql = "INSERT INTO products (images) value = $image_name";
+        
+    }
+
+?>
+
+<!-- php navber includ -->
+<?php include('include/header.php');  ?>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+        <div class="jumbotron">
+            <h1 class="display-4">Upload Your Image</h1>
+            <p class="lead">This image will show in you'r profile</p>
+            <hr class="my-4">
+
+            <form action="" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="photo">Upload Image</label>
+                    <input id="photo" class="form-control" type="file" name="photo">
+                </div>
+                <div class="form-group text-right">
+                    <input type="submit" name="image_upload" value="Upload Image" class="btn btn-primary">
+                </div>
+
+
+            </form>
+
+        </div>
+        </div>
+    </div>
+    
+</div>
+
+
+
+
+<?php include('include/footer.php');  ?>
